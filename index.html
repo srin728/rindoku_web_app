@@ -23,7 +23,7 @@
             margin: 0;
             background: var(--bg);
             color: var(--text);
-            font-family: Inter, Arial, sans-serif;
+            font-family: Inter, Arial, sans-serif
         }
 
         .container {
@@ -139,13 +139,10 @@
             <h2>抽選設定</h2>
 
             <div class="description">
-                「重み」は相対的な当たりやすさを表します。<br> 例えば、重みが 2 の項目は、重みが 1 の項目より <b>2 倍選ばれやすく</b>なります。<br>
-                表示されている％は、現在の設定に基づく選択確率です。
+                重みは相対的な当たりやすさです（重み2は重み1の2倍）。
             </div>
 
-            <!-- 一括入力 -->
-            <div class="description"> 項目を一括で入力する場合は、以下に 1 行 1 項目で入力してください。 </div> <textarea id="bulkInput"
-                placeholder="Alice&#10;Bob&#10;Charlie"></textarea><br><br>
+            <textarea id="bulkInput" placeholder="Alice&#10;Bob&#10;Charlie"></textarea><br><br>
             <button class="secondary" onclick="bulkAdd()">一括追加</button>
 
             <hr style="border-color:#334155;margin:25px 0">
@@ -209,6 +206,8 @@
                     total ? `${(100 * w / total).toFixed(1)}%` : "0%";
             });
         }
+
+        /* 抽選（時刻表示つき） */
         function draw() {
             const rows = [...document.querySelectorAll("#items .item")];
             let list = [], sum = 0;
@@ -218,14 +217,23 @@
                 if (n && w > 0) { list.push({ n, w }); sum += w }
             });
             if (!sum) return;
+
             let r = Math.random() * sum, acc = 0;
             for (const i of list) {
                 acc += i.w;
-                if (r < acc) { result.textContent = "抽選結果: " + i.n; return; }
+                if (r < acc) {
+                    const now = new Date();
+                    const timeStr =
+                        String(now.getHours()).padStart(2, "0") + ":" +
+                        String(now.getMinutes()).padStart(2, "0") + ":" +
+                        String(now.getSeconds()).padStart(2, "0");
+                    result.textContent = `抽選結果: ${i.n}（${timeStr}）`;
+                    return;
+                }
             }
         }
 
-        /* タイマー（タブ非表示でも正確） */
+        /* タイマー */
         let timer = null, endTime = 0;
 
         function startTimer() {
