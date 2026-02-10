@@ -1,309 +1,331 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-<meta charset="UTF-8">
-<title>輪読用抽選アプリ</title>
+    <meta charset="UTF-8">
+    <title>輪読用抽選アプリ</title>
 
-<style>
-:root {
-  --bg: #0f172a;
-  --panel: #1e293b;
-  --text: #e5e7eb;
-  --accent: #38bdf8;
-  --danger: #f87171;
-  --muted: #94a3b8;
-}
+    <style>
+        :root {
+            --bg: #0f172a;
+            --panel: #1e293b;
+            --text: #e5e7eb;
+            --accent: #38bdf8;
+            --danger: #f87171;
+            --muted: #94a3b8;
+        }
 
-* { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: "Inter", Arial, sans-serif;
-}
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Inter", Arial, sans-serif;
+        }
 
-.container {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 30px;
-}
+        .container {
+            max-width: 820px;
+            margin: 40px auto;
+            padding: 30px;
+        }
 
-.panel {
-  background: var(--panel);
-  border-radius: 14px;
-  padding: 25px;
-  margin-bottom: 30px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-}
+        .panel {
+            background: var(--panel);
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
 
-h1 {
-  text-align: center;
-  margin-bottom: 40px;
-}
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-h2 {
-  margin-top: 0;
-  border-left: 4px solid var(--accent);
-  padding-left: 10px;
-}
+        h2 {
+            margin-top: 0;
+            border-left: 4px solid var(--accent);
+            padding-left: 10px;
+        }
 
-.description {
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: #cbd5f5;
-  margin-bottom: 20px;
-}
+        .description {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #cbd5f5;
+            margin-bottom: 20px;
+        }
 
-.item {
-  display: grid;
-  grid-template-columns: 1fr 80px 80px 40px;
-  gap: 10px;
-  margin-bottom: 10px;
-  align-items: center;
-}
+        .item {
+            display: grid;
+            grid-template-columns: 1fr 80px 80px 40px;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
 
-input {
-  background: #020617;
-  border: 1px solid #334155;
-  color: var(--text);
-  padding: 8px 10px;
-  border-radius: 8px;
-}
+        input,
+        textarea {
+            background: #020617;
+            border: 1px solid #334155;
+            color: var(--text);
+            padding: 8px 10px;
+            border-radius: 8px;
+        }
 
-.prob {
-  font-size: 0.8rem;
-  color: var(--muted);
-  text-align: right;
-}
+        textarea {
+            width: 100%;
+            min-height: 80px;
+            resize: vertical;
+        }
 
-button {
-  background: var(--accent);
-  color: #020617;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-right: 8px;
-}
+        .prob {
+            font-size: 0.8rem;
+            color: var(--muted);
+            text-align: right;
+        }
 
-button.secondary {
-  background: #334155;
-  color: var(--text);
-}
+        button {
+            background: var(--accent);
+            color: #020617;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 8px;
+        }
 
-button.danger {
-  background: var(--danger);
-  color: #020617;
-}
+        button.secondary {
+            background: #334155;
+            color: var(--text);
+        }
 
-button.delete {
-  background: transparent;
-  color: var(--danger);
-  font-size: 1.2rem;
-  padding: 0;
-}
+        button.danger {
+            background: var(--danger);
+            color: #020617;
+        }
 
-.result {
-  margin-top: 20px;
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: var(--accent);
-}
+        button.delete {
+            background: transparent;
+            color: var(--danger);
+            font-size: 1.2rem;
+            padding: 0;
+        }
 
-.timer-display {
-  font-size: 2.5rem;
-  font-weight: bold;
-  text-align: center;
-  margin: 15px 0;
-}
-</style>
+        .result {
+            margin-top: 20px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .timer-display {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 15px 0;
+        }
+    </style>
 </head>
 
 <body>
-<div class="container">
+    <div class="container">
 
-<h1>輪読用抽選アプリ</h1>
+        <h1>輪読用抽選アプリ</h1>
 
-<!-- 抽選 -->
-<div class="panel">
-  <h2>抽選設定</h2>
+        <!-- 抽選 -->
+        <div class="panel">
+            <h2>抽選設定</h2>
 
-  <div class="description">
-    「重み」は相対的な当たりやすさを表します。<br>
-    表示されている％は、現在の設定に基づく選択確率です。
-  </div>
+            <div class="description">
+                「重み」は相対的な当たりやすさを表します。<br>
+                例えば、重みが 2 の項目は、重みが 1 の項目より
+                <b>2 倍選ばれやすく</b>なります。<br>
+                表示されている％は、現在の設定に基づく選択確率です。
+            </div>
 
-  <div id="items">
-    <div class="item">
-      <input type="text" value="A">
-      <input type="number" value="3" min="0" oninput="updateProbabilities()">
-      <div class="prob"></div>
-      <button class="delete" onclick="removeItem(this)">×</button>
+            <!-- 一括入力 -->
+            <div class="description">
+                項目を一括で入力する場合は、以下に 1 行 1 項目で入力してください。
+            </div>
+            <textarea id="bulkInput" placeholder="例：
+Alice
+Bob
+Charlie"></textarea>
+            <br><br>
+            <button class="secondary" onclick="bulkAdd()">一括追加</button>
+
+            <hr style="border-color:#334155; margin:25px 0;">
+
+            <!-- 個別追加 -->
+            <button class="secondary" onclick="addItem()">＋ 項目追加</button>
+
+            <div id="items">
+                <div class="item">
+                    <input type="text" value="A">
+                    <input type="number" value="3" min="0" oninput="updateProbabilities()">
+                    <div class="prob"></div>
+                    <button class="delete" onclick="removeItem(this)">×</button>
+                </div>
+            </div>
+
+            <button onclick="draw()">抽選</button>
+
+            <div id="result" class="result"></div>
+        </div>
+
+        <!-- タイマー -->
+        <div class="panel">
+            <h2>タイマー</h2>
+
+            <div class="item" style="grid-template-columns: 1fr 1fr;">
+                <input id="min" type="number" placeholder="分" min="0">
+                <input id="sec" type="number" placeholder="秒" min="0" max="59">
+            </div>
+
+            <div class="timer-display" id="time">00:00</div>
+
+            <button onclick="startTimer()">スタート</button>
+            <button class="secondary" onclick="stopTimer()">ストップ</button>
+            <button class="danger" onclick="resetTimer()">リセット</button>
+        </div>
+
     </div>
-    <div class="item">
-      <input type="text" value="B">
-      <input type="number" value="3" min="0" oninput="updateProbabilities()">
-      <div class="prob"></div>
-      <button class="delete" onclick="removeItem(this)">×</button>
-    </div>
-  </div>
 
-  <button class="secondary" onclick="addItem()">＋ 項目追加</button>
-  <button onclick="draw()">抽選</button>
-
-  <div id="result" class="result"></div>
-</div>
-
-<!-- タイマー -->
-<div class="panel">
-  <h2>タイマー</h2>
-
-  <div class="description">
-    時間を入力してスタートしてください。<br>
-    終了時にかわいい音が鳴ります。
-  </div>
-
-  <div class="item" style="grid-template-columns: 1fr 1fr;">
-    <input id="min" type="number" placeholder="分" min="0">
-    <input id="sec" type="number" placeholder="秒" min="0" max="59">
-  </div>
-
-  <div class="timer-display" id="time">00:00</div>
-
-  <button onclick="startTimer()">スタート</button>
-  <button class="secondary" onclick="stopTimer()">ストップ</button>
-  <button class="danger" onclick="resetTimer()">リセット</button>
-</div>
-
-</div>
-
-<script>
-/* 項目操作 */
-function addItem() {
-  const div = document.createElement("div");
-  div.className = "item";
-  div.innerHTML = `
-    <input type="text">
+    <script>
+        /* 項目操作 */
+        function addItem(name = "") {
+            const div = document.createElement("div");
+            div.className = "item";
+            div.innerHTML = `
+    <input type="text" value="${name}">
     <input type="number" value="3" min="0" oninput="updateProbabilities()">
     <div class="prob"></div>
     <button class="delete" onclick="removeItem(this)">×</button>
   `;
-  document.getElementById("items").appendChild(div);
-  updateProbabilities();
-}
+            document.getElementById("items").appendChild(div);
+            updateProbabilities();
+        }
 
-function removeItem(btn) {
-  btn.parentElement.remove();
-  updateProbabilities();
-}
+        function bulkAdd() {
+            const text = document.getElementById("bulkInput").value;
+            text.split("\n")
+                .map(s => s.trim())
+                .filter(s => s !== "")
+                .forEach(name => addItem(name));
+            document.getElementById("bulkInput").value = "";
+        }
 
-/* 確率表示 */
-function updateProbabilities() {
-  const items = document.querySelectorAll("#items .item");
-  let total = 0;
-  items.forEach(i => total += Number(i.children[1].value) || 0);
+        function removeItem(btn) {
+            btn.parentElement.remove();
+            updateProbabilities();
+        }
 
-  items.forEach(i => {
-    const w = Number(i.children[1].value) || 0;
-    const p = total > 0 ? (100 * w / total).toFixed(1) : 0;
-    i.querySelector(".prob").textContent = `${p}%`;
-  });
-}
+        /* 確率表示 */
+        function updateProbabilities() {
+            const items = document.querySelectorAll("#items .item");
+            let total = 0;
+            items.forEach(i => total += Number(i.children[1].value) || 0);
 
-/* 抽選 */
-function draw() {
-  const items = document.querySelectorAll("#items .item");
-  let list = [], total = 0;
+            items.forEach(i => {
+                const w = Number(i.children[1].value) || 0;
+                const p = total > 0 ? (100 * w / total).toFixed(1) : 0;
+                i.querySelector(".prob").textContent = `${p}%`;
+            });
+        }
 
-  items.forEach(i => {
-    const name = i.children[0].value.trim();
-    const w = Number(i.children[1].value);
-    if (name === "") {
-      i.remove();               // 空白行を自動削除
-    } else if (w > 0) {
-      list.push({ name, w });
-      total += w;
-    }
-  });
+        /* 抽選 */
+        function draw() {
+            const items = document.querySelectorAll("#items .item");
+            let list = [], total = 0;
 
-  updateProbabilities();
-  if (total === 0) return;
+            items.forEach(i => {
+                const name = i.children[0].value.trim();
+                const w = Number(i.children[1].value);
+                if (name === "") {
+                    i.remove();
+                } else if (w > 0) {
+                    list.push({ name, w });
+                    total += w;
+                }
+            });
 
-  let r = Math.random() * total, sum = 0;
-  for (const item of list) {
-    sum += item.w;
-    if (r < sum) {
-      document.getElementById("result").textContent =
-        "抽選結果: " + item.name;
-      return;
-    }
-  }
-}
+            updateProbabilities();
+            if (total === 0) return;
 
-/* タイマー音（かわいい） */
-function cuteSound() {
-  const ctx = new AudioContext();
-  const gain = ctx.createGain();
-  gain.gain.value = 0.15;
-  gain.connect(ctx.destination);
+            let r = Math.random() * total, sum = 0;
+            for (const item of list) {
+                sum += item.w;
+                if (r < sum) {
+                    document.getElementById("result").textContent =
+                        "抽選結果: " + item.name;
+                    return;
+                }
+            }
+        }
 
-  [660, 880].forEach((freq, i) => {
-    const osc = ctx.createOscillator();
-    osc.type = "sine";
-    osc.frequency.value = freq;
-    osc.connect(gain);
-    osc.start(ctx.currentTime + i * 0.15);
-    osc.stop(ctx.currentTime + i * 0.15 + 0.12);
-  });
-}
+        /* タイマー音 */
+        function sound() {
+            const ctx = new AudioContext();
+            const gain = ctx.createGain();
+            gain.gain.value = 0.15;
+            gain.connect(ctx.destination);
+            [660, 880].forEach((f, i) => {
+                const o = ctx.createOscillator();
+                o.frequency.value = f;
+                o.connect(gain);
+                o.start(ctx.currentTime + i * 0.15);
+                o.stop(ctx.currentTime + i * 0.15 + 0.12);
+            });
+        }
 
-/* タイマー */
-let timer = null;
-let remaining = 0;
+        /* タイマー */
+        let timer = null;
+        let remaining = 0;
 
-function updateDisplay() {
-  const m = String(Math.floor(remaining / 60)).padStart(2, "0");
-  const s = String(remaining % 60).padStart(2, "0");
-  document.getElementById("time").textContent = `${m}:${s}`;
-}
+        function updateDisplay() {
+            const m = String(Math.floor(remaining / 60)).padStart(2, "0");
+            const s = String(remaining % 60).padStart(2, "0");
+            document.getElementById("time").textContent = `${m}:${s}`;
+        }
 
-function startTimer() {
-  if (timer) return;
+        function startTimer() {
+            if (timer) return;
+            if (remaining === 0) {
+                remaining =
+                    (Number(min.value) || 0) * 60 +
+                    (Number(sec.value) || 0);
+                if (remaining === 0) return;
+            }
+            updateDisplay();
+            timer = setInterval(() => {
+                remaining--;
+                updateDisplay();
+                if (remaining <= 0) {
+                    stopTimer();
+                    document.getElementById("time").textContent = "TIME UP";
+                    sound();
+                }
+            }, 1000);
+        }
 
-  if (remaining === 0) {
-    remaining =
-      (Number(min.value) || 0) * 60 +
-      (Number(sec.value) || 0);
-    if (remaining === 0) return;
-  }
+        function stopTimer() {
+            clearInterval(timer);
+            timer = null;
+        }
 
-  updateDisplay();
-  timer = setInterval(() => {
-    remaining--;
-    updateDisplay();
-    if (remaining <= 0) {
-      stopTimer();
-      document.getElementById("time").textContent = "TIME UP";
-      cuteSound();
-    }
-  }, 1000);
-}
+        function resetTimer() {
+            stopTimer();
+            remaining = 0;
+            document.getElementById("time").textContent = "00:00";
+        }
 
-function stopTimer() {
-  clearInterval(timer);
-  timer = null;
-}
-
-function resetTimer() {
-  stopTimer();
-  remaining = 0;
-  document.getElementById("time").textContent = "00:00";
-}
-
-updateProbabilities();
-</script>
+        updateProbabilities();
+    </script>
 
 </body>
+
 </html>
